@@ -7,8 +7,8 @@ const stripe = require("stripe")(
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
+app.use(bodyParser.json({ limit: "30mb", extended: true }));
 
 app.use(cors());
 
@@ -37,30 +37,8 @@ app.post("/payments/create", cors(), async (req, res) => {
       success: false,
     });
   }
-
-  // let { amount, id } = req.body;
-  // try {
-  //   const payment = await stripe.paymentIntents.create({
-  //     amount,
-  //     currency: "inr",
-  //     description: "Spatula company",
-  //     payment_method: id,
-  //     confirm: true,
-  //   });
-  //   console.log("Payment", payment);
-  //   res.json({
-  //     message: "Payment successful",
-  //     success: true,
-  //   });
-  // } catch (error) {
-  //   console.log("Error", error);
-  //   res.json({
-  //     message: "Payment failed",
-  //     success: false,
-  //   });
-  // }
 });
-
-app.listen(process.env.PORT || 5000, () => {
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
   console.log("Sever is listening on port 5000");
 });
