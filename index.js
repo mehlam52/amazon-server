@@ -12,6 +12,10 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
+app.get("/", (req, res) => {
+  res.send("Hello to amazon");
+});
+
 app.post("/payments/create", cors(), async (req, res) => {
   const total = req.query.total;
 
