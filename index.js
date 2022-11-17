@@ -16,28 +16,28 @@ app.get("/", (req, res) => {
   res.send("Hello to amazon");
 });
 
-// app.post("/payments/create", cors(), async (req, res) => {
-//   const total = req.query.total;
+app.post("/payments/create", cors(), async (req, res) => {
+  const total = req.query.total;
 
-//   console.log("payment request recieved for amount>>>", total);
+  console.log("payment request recieved for amount>>>", total);
 
-//   try {
-//     const paymentIntent = await stripe.paymentIntents.create({
-//       amount: total,
-//       currency: "inr",
-//     });
-//     //ok created
-//     res.status(201).send({
-//       clientSecret: paymentIntent.client_secret,
-//     });
-//   } catch (error) {
-//     console.log("Error", error);
-//     res.json({
-//       message: "Payment failed",
-//       success: false,
-//     });
-//   }
-// });
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: total,
+      currency: "inr",
+    });
+    //ok created
+    res.status(201).send({
+      clientSecret: paymentIntent.client_secret,
+    });
+  } catch (error) {
+    console.log("Error", error);
+    res.json({
+      message: "Payment failed",
+      success: false,
+    });
+  }
+});
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log("Sever is listening on port 5000");
